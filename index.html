@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creador 3D Humano Procedural</title>
+  <meta name="description" content="Estudio interactivo en Three.js para esculpir y personalizar personajes humanos 3D con anatomía muscular y rasgos faciales 100% generados por código y exportación GLB." />
+  <meta property="og:title" content="Creador 3D Humano Procedural" />
+  <meta property="og:description" content="Estudio interactivo en Three.js para esculpir y personalizar personajes humanos 3D con anatomía muscular y rasgos faciales 100% generados por código y exportación GLB." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- Contenedor del Lienzo WebGL 3D -->
+  <div id="viewport-container" aria-label="Visor 3D de Anatomía Humana Procedural"></div>
+
+  <!-- Botón para contraer/expandir el panel y admirar el modelo 3D a pantalla completa -->
+  <button id="btnTogglePanel" class="panel-toggle-btn" title="Mostrar / Ocultar panel de edición (Tecla H)">
+    <span>◀ Panel</span>
+  </button>
+
+  <!-- Panel de Configuración (Izquierda, estilo estudio paramétrico) -->
+  <aside id="panel" aria-label="Panel de Control Anatómico">
+    <header class="panel-header">
+      <div class="brand-block">
+        <h1>Estudio Anatómico 3D</h1>
+        <p class="subtitle">Generación 100% Procedural · Three.js</p>
+      </div>
+      <span id="status" class="status-text">Listo</span>
+    </header>
+
+    <!-- Arquetipos rápidos -->
+    <section class="grp">
+      <label class="sec-label">Biotipo / Preajuste Base</label>
+      <div class="preset-grid" id="archetypeButtons">
+        <button type="button" data-archetype="atletico" class="preset-btn active">Atlético</button>
+        <button type="button" data-archetype="culturista" class="preset-btn">Culturista</button>
+        <button type="button" data-archetype="esbelto" class="preset-btn">Esbelto</button>
+        <button type="button" data-archetype="robusto" class="preset-btn">Robusto</button>
+      </div>
+    </section>
+
+    <!-- Selector de Zona Anatómica -->
+    <section class="grp">
+      <div class="label-row">
+        <label class="sec-label" for="zoneSelect">Zona Anatómica (o clic en 3D)</label>
+        <button type="button" id="btnFocusZone" class="link-btn" title="Enfocar cámara en la zona activa">Enfocar vista</button>
+      </div>
+
+      <div class="zone-tabs" id="zoneTabs">
+        <button type="button" data-zone="cara" class="zone-tab active">Cara</button>
+        <button type="button" data-zone="pelo" class="zone-tab">Pelo</button>
+        <button type="button" data-zone="torso" class="zone-tab">Torso</button>
+        <button type="button" data-zone="brazos" class="zone-tab">Brazos</button>
+        <button type="button" data-zone="piernas" class="zone-tab">Piernas</button>
+        <button type="button" data-zone="items" class="zone-tab">Pose / Ropa</button>
+      </div>
+
+      <select id="zoneSelect" class="sr-select" aria-label="Seleccionar zona anatómica">
+        <option value="cara">Cara y Cabeza</option>
+        <option value="pelo">Cabello Procedural</option>
+        <option value="torso">Torso y Músculos</option>
+        <option value="brazos">Brazos, Antebrazos y Manos</option>
+        <option value="piernas">Piernas, Gemelos y Pies</option>
+        <option value="items">Poses y Equipamiento</option>
+      </select>
+
+      <!-- Controles extra de la zona (ej. estilo de pelo o pose) -->
+      <div id="zoneExtraControls" class="zone-extra"></div>
+
+      <!-- Sliders dinámicos de la zona seleccionada -->
+      <div id="zoneSliders" class="sliders-container"></div>
+    </section>
+
+    <!-- Apariencia y Colores -->
+    <section class="grp">
+      <label class="sec-label">Apariencia y Pigmentación</label>
+      <div class="color-grid">
+        <div class="color-item">
+          <label for="skinColor">Piel</label>
+          <input type="color" id="skinColor" value="#e8b49a" />
+        </div>
+        <div class="color-item">
+          <label for="eyeColor">Ojos</label>
+          <input type="color" id="eyeColor" value="#3b82f6" />
+        </div>
+        <div class="color-item">
+          <label for="hairColor">Cabello</label>
+          <input type="color" id="hairColor" value="#2c1b12" />
+        </div>
+        <div class="color-item">
+          <label for="lipColor">Labios</label>
+          <input type="color" id="lipColor" value="#c26d68" />
+        </div>
+        <div class="color-item">
+          <label for="clothColor">Prenda</label>
+          <input type="color" id="clothColor" value="#1e293b" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Vistas de Cámara -->
+    <section class="grp">
+      <label class="sec-label">Ángulo de Cámara</label>
+      <div class="cam-grid">
+        <button type="button" data-cam="full" class="cam-btn">Cuerpo</button>
+        <button type="button" data-cam="face" class="cam-btn">Rostro</button>
+        <button type="button" data-cam="torso" class="cam-btn">Torso</button>
+        <button type="button" data-cam="side" class="cam-btn">Perfil</button>
+      </div>
+    </section>
+
+    <!-- Acciones Principales -->
+    <section class="grp actions-section">
+      <div class="actions-row">
+        <button type="button" id="btnRandom" class="btn-secondary">Aleatorizar Cuerpo</button>
+        <button type="button" id="btnReset" class="btn-secondary">Restaurar</button>
+      </div>
+      <div class="actions-row">
+        <button type="button" id="btnRotate" class="btn-secondary">Girar Cámara</button>
+        <button type="button" id="btnWireframe" class="btn-secondary">Malla / Sólido</button>
+      </div>
+      <button type="button" id="btnExport" class="btn-primary">Exportar Modelo (.GLB)</button>
+    </section>
+  </aside>
+
+  <!-- Indicador de zona activa y ayuda de controles en esquina inferior derecha -->
+  <div id="hud-bottom-right" class="hud-bar">
+    <span id="activeZoneIndicator" class="hud-zone">Zona activa: Cara y Cabeza</span>
+    <span class="hud-sep">·</span>
+    <span class="hud-hint">Clic en el cuerpo 3D para seleccionar zona · Arrastrar para orbitar · Rueda para zoom</span>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

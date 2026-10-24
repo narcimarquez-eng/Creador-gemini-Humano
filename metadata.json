@@ -1,0 +1,5 @@
+{
+  "name": "Creador 3D Humano Procedural",
+  "description": "Estudio interactivo en Three.js para esculpir y personalizar personajes humanos 3D con anatomía muscular y rasgos faciales 100% generados por código y exportación GLB.",
+  "requestFramePermissions": []
+}

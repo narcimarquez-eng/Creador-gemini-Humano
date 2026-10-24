@@ -1,0 +1,12 @@
+character-generator/
+├── index.html
+├── css/
+│   └── style.css
+└── js/
+    ├── main.js
+    ├── viewer.js
+    ├── character.js
+    ├── exporter.js
+    ├── ui.js
+    ├── items.js
+    └── procedural.js
