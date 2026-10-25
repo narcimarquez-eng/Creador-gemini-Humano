@@ -1,6 +1,6 @@
 {
-  "summary":  "Plan de implementación para el Generador de Personajes Humanos 3D 100% Procedural en Three.js, organizado de forma modular con anatomía orgánica avanzada (LatheGeometry, TubeGeometry y deformación de vértices), esqueleto jerárquico articulado, rasgos faciales completos, definición muscular dinámica, selección por clic (Raycaster) y exportación GLB.",
-  "updatedAt":  "2026-10-24T13:38:06.720707691Z",
+  "summary":  "Especificación técnica y de diseño con las tres nuevas mejoras implementadas: anclaje antirrotura folicular del cabello, material de queratina física con brillo sedoso y facciones humanas hiperrealistas (filtrum nasal y conducto lagrimal con pliegue supratarsal).",
+  "updatedAt":  "2026-10-24T18:55:53.645735709Z",
   "requestFeedback":  true,
   "userFacing":  true
 }

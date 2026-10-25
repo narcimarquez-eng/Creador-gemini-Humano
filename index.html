@@ -26,19 +26,75 @@
     <header class="panel-header">
       <div class="brand-block">
         <h1>Estudio Anatómico 3D</h1>
-        <p class="subtitle">Generación 100% Procedural · Three.js</p>
+        <p class="subtitle">Pose A / T · Animaciones de Juego · 100% Procedural</p>
       </div>
-      <span id="status" class="status-text">Listo</span>
+      <span id="status" class="status-text">Pose A Lista</span>
     </header>
+
+    <!-- Pose Base (A / T) y Animaciones de Videojuegos -->
+    <section class="grp">
+      <div class="label-row">
+        <label class="sec-label">Pose Base (Rigging) y Animaciones</label>
+        <button type="button" id="btnPlayPauseAnim" class="link-btn">Pausar / Reanudar</button>
+      </div>
+
+      <!-- Selector rápido Pose A vs Pose T -->
+      <div class="bind-pose-row" id="bindPoseButtons">
+        <button type="button" data-bindpose="apose" class="bind-btn active" title="Pose A a 55°: brazos separados con holgura natural y despeje de dorsales">
+          Pose A (55° · Óptima)
+        </button>
+        <button type="button" data-bindpose="tpose" class="bind-btn" title="Pose T a 90°: calibración estándar de esqueleto">
+          Pose T (90° · Rigging)
+        </button>
+      </div>
+
+      <!-- Botones rápidos de Animaciones de Juego -->
+      <div class="anim-chip-grid" id="quickAnimButtons">
+        <button type="button" data-anim="idle" class="anim-chip">Idle</button>
+        <button type="button" data-anim="walk" class="anim-chip">Andar</button>
+        <button type="button" data-anim="run" class="anim-chip">Correr</button>
+        <button type="button" data-anim="jump" class="anim-chip">Saltar</button>
+        <button type="button" data-anim="swim" class="anim-chip">Nadar</button>
+        <button type="button" data-anim="crouch" class="anim-chip">Sigilo</button>
+        <button type="button" data-anim="punch" class="anim-chip">Golpear</button>
+        <button type="button" data-anim="kick" class="anim-chip">Patada</button>
+        <button type="button" data-anim="dodge" class="anim-chip">Esquivar</button>
+        <button type="button" data-anim="hit" class="anim-chip">Bloqueo</button>
+        <button type="button" data-anim="victory" class="anim-chip">Victoria</button>
+        <button type="button" data-anim="none" class="anim-chip active">Pose Fija</button>
+      </div>
+
+      <!-- Skills Definitivas (Ultimates) -->
+      <label class="sec-label" style="margin-top: 10px; margin-bottom: 6px;">Skills Definitivas (Ultimates con VFX)</label>
+      <div class="ult-grid" id="ultimateButtons">
+        <button type="button" data-anim="ultimate_nova" class="ult-btn">Supernova</button>
+        <button type="button" data-anim="ultimate_slam" class="ult-btn">Impacto Sísmico</button>
+        <button type="button" data-anim="ultimate_beam" class="ult-btn">Cañón Energía</button>
+      </div>
+
+      <!-- Velocidad de Animación -->
+      <div class="sl" style="margin-top: 9px;">
+        <span>Velocidad Animación</span>
+        <input type="range" id="animSpeedSlider" min="0.20" max="2.00" step="0.05" value="1.00" />
+        <b id="animSpeedVal">1.00x</b>
+      </div>
+    </section>
 
     <!-- Arquetipos rápidos -->
     <section class="grp">
-      <label class="sec-label">Biotipo / Preajuste Base</label>
+      <label class="sec-label">Biotipo / Preajuste Corporal (Generador Aleatorio)</label>
       <div class="preset-grid" id="archetypeButtons">
-        <button type="button" data-archetype="atletico" class="preset-btn active">Atlético</button>
-        <button type="button" data-archetype="culturista" class="preset-btn">Culturista</button>
-        <button type="button" data-archetype="esbelto" class="preset-btn">Esbelto</button>
-        <button type="button" data-archetype="robusto" class="preset-btn">Robusto</button>
+        <button type="button" data-archetype="hombre" class="preset-btn" title="Genera un hombre adulto aleatorio con proporciones y rasgos masculinos">Hombre</button>
+        <button type="button" data-archetype="mujer" class="preset-btn" title="Genera una mujer adulta aleatoria con rasgos y curvas estilizadas">Mujer</button>
+        <button type="button" data-archetype="anciano" class="preset-btn" title="Genera un anciano varón aleatorio con pelo canoso, barba y facciones maduras">Anciano</button>
+        <button type="button" data-archetype="anciana" class="preset-btn" title="Genera una anciana aleatoria con pelo plateado y facciones maduras">Anciana</button>
+        <button type="button" data-archetype="nino" class="preset-btn" title="Genera un niño aleatorio (~8-10 años) con proporciones infantiles">Niño</button>
+        <button type="button" data-archetype="nina" class="preset-btn" title="Genera una niña aleatoria (~8-10 años) con proporciones infantiles">Niña</button>
+        <button type="button" data-archetype="proporcional" class="preset-btn active" title="Genera una variación aleatoria armónica del rostro humano">Rostro Humano</button>
+        <button type="button" data-archetype="atletico" class="preset-btn" title="Genera una persona atlética y tonificada aleatoria">Atlético</button>
+        <button type="button" data-archetype="culturista" class="preset-btn" title="Genera una persona culturista con hipertrofia muscular aleatoria">Culturista</button>
+        <button type="button" data-archetype="esbelto" class="preset-btn" title="Genera una persona esbelta y estilizada aleatoria">Esbelto</button>
+        <button type="button" data-archetype="robusto" class="preset-btn" title="Genera una persona robusta y corpulenta aleatoria">Robusto</button>
       </div>
     </section>
 
@@ -55,7 +111,7 @@
         <button type="button" data-zone="torso" class="zone-tab">Torso</button>
         <button type="button" data-zone="brazos" class="zone-tab">Brazos</button>
         <button type="button" data-zone="piernas" class="zone-tab">Piernas</button>
-        <button type="button" data-zone="items" class="zone-tab">Pose / Ropa</button>
+        <button type="button" data-zone="items" class="zone-tab">Equipamiento</button>
       </div>
 
       <select id="zoneSelect" class="sr-select" aria-label="Seleccionar zona anatómica">
@@ -64,11 +120,34 @@
         <option value="torso">Torso y Músculos</option>
         <option value="brazos">Brazos, Antebrazos y Manos</option>
         <option value="piernas">Piernas, Gemelos y Pies</option>
-        <option value="items">Poses y Equipamiento</option>
+        <option value="items">Poses, Animaciones y Ropa</option>
       </select>
 
-      <!-- Controles extra de la zona (ej. estilo de pelo o pose) -->
+      <!-- Controles extra de la zona (ej. estilo de pelo o tipo de ojos) -->
       <div id="zoneExtraControls" class="zone-extra"></div>
+
+      <!-- Barra de Modo de Edición Avanzada (Límites Extensibles) -->
+      <div class="adv-mode-bar" id="advModeBar">
+        <div class="adv-toggle-row">
+          <label class="switch-container" title="Activa la edición manual de límites Mín/Máx en cada slider y rangos extendidos">
+            <input type="checkbox" id="advModeToggle" />
+            <span class="switch-slider"></span>
+            <span class="switch-text">Edición Avanzada (Límites)</span>
+          </label>
+          <span id="advModeBadge" class="adv-badge">Básico</span>
+        </div>
+        <div class="adv-actions" id="advActions" style="display: none;">
+          <button type="button" id="btnExpandLimits" class="adv-btn" title="Amplía los límites un 50% extra en ambos extremos">
+            ↔ +50% Límites
+          </button>
+          <button type="button" id="btnExtremeLimits" class="adv-btn" title="Habilita rangos ultra-amplios (0.10 a 2.50) para deformaciones extremas">
+            ⚡ Modo Extremo
+          </button>
+          <button type="button" id="btnResetLimits" class="adv-btn" title="Restablecer límites a valores iniciales">
+            ↺ Reset
+          </button>
+        </div>
+      </div>
 
       <!-- Sliders dinámicos de la zona seleccionada -->
       <div id="zoneSliders" class="sliders-container"></div>
@@ -89,6 +168,10 @@
         <div class="color-item">
           <label for="hairColor">Cabello</label>
           <input type="color" id="hairColor" value="#2c1b12" />
+        </div>
+        <div class="color-item">
+          <label for="beardColor">Barba</label>
+          <input type="color" id="beardColor" value="#2c1b12" />
         </div>
         <div class="color-item">
           <label for="lipColor">Labios</label>
@@ -122,7 +205,7 @@
         <button type="button" id="btnRotate" class="btn-secondary">Girar Cámara</button>
         <button type="button" id="btnWireframe" class="btn-secondary">Malla / Sólido</button>
       </div>
-      <button type="button" id="btnExport" class="btn-primary">Exportar Modelo (.GLB)</button>
+      <button type="button" id="btnExport" class="btn-primary">Exportar GLB (Con 14 Animaciones)</button>
     </section>
   </aside>
 
@@ -130,7 +213,9 @@
   <div id="hud-bottom-right" class="hud-bar">
     <span id="activeZoneIndicator" class="hud-zone">Zona activa: Cara y Cabeza</span>
     <span class="hud-sep">·</span>
-    <span class="hud-hint">Clic en el cuerpo 3D para seleccionar zona · Arrastrar para orbitar · Rueda para zoom</span>
+    <span id="activeAnimIndicator" class="hud-anim">Modo: Pose A (45° Rigging)</span>
+    <span class="hud-sep">·</span>
+    <span class="hud-hint">Clic en el cuerpo 3D para editar zona</span>
   </div>
 
   <script type="module" src="/js/main.js"></script>
